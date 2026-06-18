@@ -68,6 +68,8 @@ import { useFinanceStore } from '@/stores/financeStore'
 import { useToast } from 'vue-toastification'
 
 import api from '@/services/api'
+// import router from '@/router'
+import { useRouter } from 'vue-router'
 
 const financeStore = useFinanceStore()
 
@@ -77,6 +79,7 @@ const notes = ref('')
 const amount = ref(null)
 
 const toast = useToast()
+const router = useRouter()
 
 const addTransaction = async() => {
   if (!title.value || !amount.value) {
@@ -109,6 +112,7 @@ const addTransaction = async() => {
     type.value = 'Spend'
 
     toast.success('Transaction Added Successfully 🎉')
+    router.push("transactions")
   } catch (error) {
     toast.error(
       error.response?.data?.message ||

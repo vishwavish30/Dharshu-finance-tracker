@@ -246,15 +246,19 @@ const openDeleteModal = (id) => {
 }
 
 const confirmDelete = async () => {
-  await deleteTransaction(
-    transactionToDelete.value
-  )
+  try {
+    await deleteTransaction(
+      transactionToDelete.value
+    )
 
-  showDeleteModal.value = false
-
-  toast.success(
-    'Transaction Deleted Successfully 🗑️'
-  )
+    toast.success(
+      'Transaction Deleted Successfully 🗑️'
+    )
+  } catch (error) {
+    toast.error('Failed to delete transaction')
+  } finally {
+    showDeleteModal.value = false
+  }
 }
 
 const filteredTransactions = computed(() => {
@@ -296,12 +300,6 @@ const fetchTransactions = async () => {
 }
 
 const deleteTransaction = async (id) => {
-  const confirmed = confirm(
-    'Are you sure you want to delete this transaction?'
-  )
-
-  if (!confirmed) return
-
   try {
     const token = localStorage.getItem('token')
 
